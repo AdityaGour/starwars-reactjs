@@ -2,7 +2,8 @@
 // import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import { api } from '../../api/index';
-import { IS_LOADING, GET_STAR_WAR_LIST_BEGIN, GET_STAR_WAR_LIST_SUCCESS, GET_STAR_WAR_LIST_FAILED, GET_STAR_WAR_INFO_BEGIN, GET_STAR_WAR_INFO_SUCCESS, GET_STAR_WAR_INFO_FAILED} from '../constant'
+import { IS_LOADING, GET_STAR_WAR_LIST_BEGIN, GET_STAR_WAR_LIST_SUCCESS, GET_STAR_WAR_LIST_FAILED, GET_STAR_WAR_INFO_BEGIN, GET_STAR_WAR_INFO_SUCCESS, GET_STAR_WAR_INFO_FAILED,
+  GET_FILMS_INFO_BEGIN, GET_FILMS_INFO_FAILED,GET_FILMS_INFO_SUCCESS} from '../constant'
 
 
 export function isLoading(isLoading = false) {
@@ -70,6 +71,35 @@ export function getStarwarList(id) {
         dispatch(isLoading(false));
         dispatch({
           type: GET_STAR_WAR_INFO_FAILED,
+          payload: error.message,
+        });
+      }
+    }
+  }
+  export function getFilmsName(url) {
+    return (dispatch) => {
+      try {
+        // dispatch(isLoading(true));
+        api.get(url)
+          .then((response) => {
+              dispatch({
+                type: GET_FILMS_INFO_SUCCESS,
+                payload: response.data,
+              });
+
+          })
+          .catch((error) => {
+            toast.error(error.message);
+            dispatch(isLoading(false));
+            dispatch({
+              type: GET_FILMS_INFO_FAILED,
+              errorMessage: error.message
+            });
+          });
+      } catch (error) {
+        dispatch(isLoading(false));
+        dispatch({
+          type: GET_FILMS_INFO_FAILED,
           payload: error.message,
         });
       }

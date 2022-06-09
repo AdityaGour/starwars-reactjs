@@ -57,17 +57,12 @@ function StarwarList() {
 
     }
 
-  
 
     if (starwarData.loading == true) {
         <Spinner animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
         </Spinner>
     }
-
-
-
-
 
         return (
             <div className='table-css'>
@@ -84,7 +79,7 @@ function StarwarList() {
                         </tr>
                     </thead>
                     <tbody>
-                        {starwarData.starwarsList  && Array.isArray(starwarData.starwarsList.results) && starwarData.starwarsList.results.map((ele, index) =>
+                        {starwarData.starwarsList  && Array.isArray(starwarData.starwarsList) && starwarData.starwarsList.map((ele, index) =>
                             <tr key={index} onClick={() => handleUserprofile(ele.url, index + 1)}>
                                 <td>{index + 1}</td>
                                 <td>{ele.name}</td>
